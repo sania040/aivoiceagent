@@ -1,0 +1,41 @@
+{
+  "sessions": {
+    "20250528_182654": [
+      {
+        "timestamp": "2025-05-28T18:27:13.400872",
+        "user_text": "I need you to book an appointment for me.",
+        "assistant_text": "Sure, I can help with that! What kind of appointment would you like to book, and when would be a good time for you?",
+        "extracted_info": {
+          "important_points": [
+            "User: I need you to book an appointment for me.",
+            "What kind of appointment would you like to book, and when would be a good time for you?"
+          ]
+        }
+      },
+      {
+        "timestamp": "2025-05-28T18:27:35.996318",
+        "user_text": "desire.",
+        "assistant_text": "Could you please clarify what kind of appointment you mean by \"desire\"? Are you looking for a specific service or consultation? Let me know so I can assist you better!",
+        "extracted_info": {
+          "important_points": [
+            "Assistant: Could you please clarify what kind of appointment you mean by \"desire\"?"
+          ]
+        }
+      }
+    ],
+    "20250528_182843": [
+      {
+        "timestamp": "2025-05-28T18:29:01.925703",
+        "user_text": "I'm flying from",
+        "assistant_text": "Great! Could you please tell me where you're flying from and where you're headed? That way, I can assist you better with your travel plans.",
+        "extracted_info": {}
+      },
+      {
+        "timestamp": "2025-05-28T18:29:28.130421",
+        "user_text": "From Islamabad to Jeddah",
+        "assistant_text": "Awesome, flying from Islamabad to Jeddah! When are you planning to travel? Also, do you have a preferred airline or any specific requirements?",
+        "extracted_info": {}
+      }
+    ]
+  }
+}

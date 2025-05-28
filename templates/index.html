@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AI Voice Agent with Simli</title>
+    <script src="https://cdn.simli.ai/sdk/v1/simli.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        #avatar-container {
+            flex: 1;
+            background-color: #f0f0f0;
+            position: relative;
+        }
+        #controls {
+            padding: 20px;
+            background-color: #fff;
+            border-top: 1px solid #ddd;
+        }
+        #user-input {
+            width: 80%;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+        #send-btn {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        #response-text {
+            padding: 10px;
+            margin-top: 10px;
+            background-color: #f9f9f9;
+            border-radius: 4px;
+            min-height: 60px;
+        }
+    </style>
+</head>
+<body>
+    <div id="avatar-container"></div>
+    
+    <div id="controls">
+        <input type="text" id="user-input" placeholder="Type your message here...">
+        <button id="send-btn">Send</button>
+        <div id="response-text"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            let simliAvatar;
+            
+            // Initialize Simli avatar
+            fetch('/api/simli-config')
+                .then(response => response.json())
+                .then(config => {
+                    simliAvatar = new Simli.Avatar({
+                        container: document.getElementById('avatar-container'),
+                        roomUrl: config.roomUrl,
+                        sessionId: config.sessionId,
+                        token: config.token
+                    });
+                })
+                .catch(error => {
+                    console.error('Error initializing Simli:', error);
+                });
+
+            // Handle send button click
+            document.getElementById('send-btn').addEventListener('click', function() {
+                const userInput = document.getElementById('user-input').value.trim();
+                if (!userInput) return;
+                
+                // Clear input
+                document.getElementById('user-input').value = '';
+                
+                // Generate response
+                fetch('/api/generate-response', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                    body: JSON.stringify({ text: userInput })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    // Display response
+                    document.getElementById('response-text').textContent = data.text;
+                    
+                    // Play audio through Simli avatar
+                    if (simliAvatar && data.audio_url) {
+                        const audioUrl = window.location.origin + data.audio_url;
+                        simliAvatar.speak({
+                            audio: audioUrl
+                        });
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+            });
+            
+            // Allow Enter key to send message
+            document.getElementById('user-input').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    document.getElementById('send-btn').click();
+                }
+            });
+        });
+    </script>
+</body>
+</html>
