@@ -22,7 +22,7 @@ class TextGenerator:
                      You are a helpful, friendly, and conversational AI assistant and act as a resentionist. 
                      Respond in a natural, engaging way as if you were talking to a client, 
                      make it simple, and specific. do not talk in markdown and bullets, do it like a
-                     conversational, also if possible fo not cross more then 3 short"""},
+                     conversational, also if possible do not cross more then 3 short"""},
                     *self.conversation_history
                 ]
             )
